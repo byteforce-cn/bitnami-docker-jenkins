@@ -12,29 +12,14 @@ ARG JAVA_EXTRA_SECURITY_DIR="/bitnami/java/extra-security"
 
 COPY prebuildfs /
 # Install required system packages and dependencies
-RUN install_packages acl ca-certificates curl fontconfig gzip libc6 libcom-err2 libcurl4 libffi6 libfontconfig1 libgcrypt20 libgmp10 libgnutls30 libgpg-error0 libgssapi-krb5-2 libhogweed4 libidn2-0 libk5crypto3 libkeyutils1 libkrb5-3 libkrb5support0 libldap-2.4-2 libnettle6 libnghttp2-14 libp11-kit0 libpsl5 librtmp1 libsasl2-2 libssh2-1 libssl1.1 libtasn1-6 libunistring2 openssh-client procps tar unzip zlib1g libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb gnupg
+RUN install_packages acl ca-certificates curl fontconfig gzip libc6 libcom-err2 libcurl4 libffi6 libfontconfig1 libgcrypt20 libgmp10 libgnutls30 libgpg-error0 libgssapi-krb5-2 libhogweed4 libidn2-0 libk5crypto3 libkeyutils1 libkrb5-3 libkrb5support0 libldap-2.4-2 libnettle6 libnghttp2-14 libp11-kit0 libpsl5 librtmp1 libsasl2-2 libssh2-1 libssl1.1 libtasn1-6 libunistring2 openssh-client procps tar unzip zlib1g libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 RUN . /opt/bitnami/scripts/libcomponent.sh && component_unpack "render-template" "1.0.1-10" --checksum 97c2ae4b001c5937e888b920bee7b1a40a076680caac53ded6d10f6207d54565
 RUN . /opt/bitnami/scripts/libcomponent.sh && component_unpack "java" "11.0.14-7" --checksum 900545c4f346a0ece8abf2caf64fd9d4ab7514967d4614d716bf7362b24f828b
 RUN . /opt/bitnami/scripts/libcomponent.sh && component_unpack "gosu" "1.14.0-7" --checksum d6280b6f647a62bf6edc74dc8e526bfff63ddd8067dcb8540843f47203d9ccf1
 RUN . /opt/bitnami/scripts/libcomponent.sh && component_unpack "git" "2.35.1-6" --checksum 75c0294b7af868721549926139e6ddbec9548fbd0e69c7e199d640a4531d858b
 RUN . /opt/bitnami/scripts/libcomponent.sh && component_unpack "jenkins" "2.332.1-0" --checksum ff8c5a701f45c97c536bfd55e905000145b776676a443b99841b0ce9a51dafc2
 
-RUN curl -sSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
-	&& echo "deb https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
-	&& apt-get update && apt-get install -y \
-	google-chrome-stable \
-	fontconfig \
-	fonts-ipafont-gothic \
-	fonts-wqy-zenhei \
-	fonts-thai-tlwg \
-	fonts-kacst \
-	fonts-symbola \
-	fonts-noto \
-	fonts-freefont-ttf \
-	--no-install-recommends 
-
 RUN apt-get update && apt-get upgrade -y && \
-    apt-get purge --auto-remove -y gnupg && \
     rm -r /var/lib/apt/lists /var/cache/apt/archives
 RUN chmod g+rwX /opt/bitnami
 
